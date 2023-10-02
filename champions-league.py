@@ -1,5 +1,7 @@
 
 import random
+
+# this are UEFA teams from 2021 champions league 
 teams = [
     {"name": "Bayern Munich", "league": "Bundesliga", "coefficient": 154.000},
     {"name": "Real Madrid", "league": "La Liga", "coefficient": 134.000},
@@ -95,17 +97,17 @@ teams = [
     {"name": "Tre Fiori", "league": "Campionato Sammarinese di Calcio", "coefficient": 1.500},
     {"name": "Prishtina", "league": "Football Superleague of Kosovo", "coefficient": 1.000},
 ]
-# Sort teams by coefficient in descending order
+# Sort teams using the lamba fuction for sorting x "coefficient", in descending order
 teams.sort(key=lambda x: -x["coefficient"])
 
-# Initialize pots for the draw
+# the pots to be uwed for seeding
 pots = {
     "Pot 1": [],
     "Pot 2": [],
     "Pot 3": [],
     "Pot 4": [],
 }
-# Populate the pots based on coefficient ranking
+# dding the teams to the pots based on their sorted coefficient
 for i, team in enumerate(teams):
     if i < 8:
         pots["Pot 1"].append(team)
@@ -113,19 +115,19 @@ for i, team in enumerate(teams):
         pots["Pot 2"].append(team)
     elif i < 24:
         pots["Pot 3"].append(team)
-    else:
+    else: #this was done just in case u have multiple teams from the same league in the top 32
         pots["Pot 4"].append(team)
 
-# Initialize groups
+# the group stages 
 num_groups = 8
 groups = {f"Group {i}": [] for i in range(1, num_groups + 1)}
 
-# Helper function to check if at least two teams in a group are from the same league
+# cheecks if two leagues are from the same team, 
 def any_two_teams_same_league(group):
     leagues = [team["league"] for team in group]
     return len(set(leagues)) < len(leagues)
 
-# Draw teams from Pot 1 into separate groups first
+# randomly disperses pot one into first position in various groups
 for i, pot_team in enumerate(random.sample(pots["Pot 1"], num_groups)):
     group_name = f"Group {i + 1}"
     groups[group_name].append(pot_team)
